@@ -14,16 +14,176 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          audience_type: Database["public"]["Enums"]["audience_type"]
+          city: string | null
+          college: string | null
+          created_at: string
+          created_by: string | null
+          date: string
+          department: string | null
+          description: string | null
+          event_type: Database["public"]["Enums"]["event_type"]
+          id: string
+          image_url: string | null
+          registration_link: string | null
+          status: Database["public"]["Enums"]["event_status"]
+          target_college: string | null
+          target_department: string | null
+          time: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience_type?: Database["public"]["Enums"]["audience_type"]
+          city?: string | null
+          college?: string | null
+          created_at?: string
+          created_by?: string | null
+          date: string
+          department?: string | null
+          description?: string | null
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          image_url?: string | null
+          registration_link?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          target_college?: string | null
+          target_department?: string | null
+          time?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience_type?: Database["public"]["Enums"]["audience_type"]
+          city?: string | null
+          college?: string | null
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          department?: string | null
+          description?: string | null
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          image_url?: string | null
+          registration_link?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          target_college?: string | null
+          target_department?: string | null
+          time?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          event_id: string | null
+          id: string
+          is_read: boolean
+          message: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          is_read?: boolean
+          message?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          is_read?: boolean
+          message?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          city: string | null
+          college: string | null
+          created_at: string
+          department: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          city?: string | null
+          college?: string | null
+          created_at?: string
+          department?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          city?: string | null
+          college?: string | null
+          created_at?: string
+          department?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      audience_type: "public" | "college" | "department"
+      event_status: "pending" | "approved"
+      event_type: "hackathon" | "workshop" | "seminar" | "fest"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +310,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      audience_type: ["public", "college", "department"],
+      event_status: ["pending", "approved"],
+      event_type: ["hackathon", "workshop", "seminar", "fest"],
+    },
   },
 } as const
