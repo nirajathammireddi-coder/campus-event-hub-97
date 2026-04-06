@@ -11,6 +11,7 @@ export type Event = {
   department: string | null;
   city: string | null;
   date: string;
+  end_date: string | null;
   time: string | null;
   image_url: string | null;
   registration_link: string | null;
@@ -20,6 +21,10 @@ export type Event = {
   target_department: string | null;
   created_by: string | null;
   created_at: string;
+  submitter_name: string | null;
+  submitter_phone: string | null;
+  submitter_email: string | null;
+  submitter_college: string | null;
 };
 
 interface EventFilters {
@@ -51,7 +56,6 @@ export function useEvents(filters: EventFilters = {}) {
       const { data, error } = await query;
       if (error) throw error;
 
-      // Client-side audience filtering
       return (data as Event[]).filter((event) => {
         if (event.audience_type === "public") return true;
         if (event.audience_type === "college" && profile?.college) {
@@ -65,20 +69,6 @@ export function useEvents(filters: EventFilters = {}) {
         }
         return false;
       });
-    },
-  });
-}
-
-export function useAdminEvents() {
-  return useQuery({
-    queryKey: ["admin-events"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("events")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data as Event[];
     },
   });
 }

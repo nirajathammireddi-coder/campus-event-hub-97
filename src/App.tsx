@@ -10,7 +10,6 @@ import AuthPage from "./pages/AuthPage";
 import EventDetailsPage from "./pages/EventDetailsPage";
 import SubmitEventPage from "./pages/SubmitEventPage";
 import ProfilePage from "./pages/ProfilePage";
-import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +26,6 @@ const App = () => (
             <Route path="/event/:id" element={<EventDetailsPage />} />
             <Route path="/submit-event" element={<SubmitEventPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

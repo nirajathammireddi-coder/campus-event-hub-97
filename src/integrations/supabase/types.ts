@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      event_photos: {
+        Row: {
+          caption: string | null
+          created_at: string
+          event_id: string
+          id: string
+          image_url: string
+          uploaded_by: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          event_id: string
+          id?: string
+          image_url: string
+          uploaded_by: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          event_id?: string
+          id?: string
+          image_url?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_photos_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           audience_type: Database["public"]["Enums"]["audience_type"]
@@ -24,11 +59,16 @@ export type Database = {
           date: string
           department: string | null
           description: string | null
+          end_date: string | null
           event_type: Database["public"]["Enums"]["event_type"]
           id: string
           image_url: string | null
           registration_link: string | null
           status: Database["public"]["Enums"]["event_status"]
+          submitter_college: string | null
+          submitter_email: string | null
+          submitter_name: string | null
+          submitter_phone: string | null
           target_college: string | null
           target_department: string | null
           time: string | null
@@ -44,11 +84,16 @@ export type Database = {
           date: string
           department?: string | null
           description?: string | null
+          end_date?: string | null
           event_type?: Database["public"]["Enums"]["event_type"]
           id?: string
           image_url?: string | null
           registration_link?: string | null
           status?: Database["public"]["Enums"]["event_status"]
+          submitter_college?: string | null
+          submitter_email?: string | null
+          submitter_name?: string | null
+          submitter_phone?: string | null
           target_college?: string | null
           target_department?: string | null
           time?: string | null
@@ -64,11 +109,16 @@ export type Database = {
           date?: string
           department?: string | null
           description?: string | null
+          end_date?: string | null
           event_type?: Database["public"]["Enums"]["event_type"]
           id?: string
           image_url?: string | null
           registration_link?: string | null
           status?: Database["public"]["Enums"]["event_status"]
+          submitter_college?: string | null
+          submitter_email?: string | null
+          submitter_name?: string | null
+          submitter_phone?: string | null
           target_college?: string | null
           target_department?: string | null
           time?: string | null

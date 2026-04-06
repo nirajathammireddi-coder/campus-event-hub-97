@@ -45,6 +45,9 @@ export function EventCard({ event }: { event: Event }) {
             <span className="flex items-center gap-1">
               <CalendarDays className="h-3.5 w-3.5" />
               {new Date(event.date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+              {event.end_date && event.end_date !== event.date && (
+                <> — {new Date(event.end_date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</>
+              )}
             </span>
             {event.city && (
               <span className="flex items-center gap-1">
