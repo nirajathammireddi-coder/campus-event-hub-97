@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Bell, LogOut, Shield, Menu, X } from "lucide-react";
+import { Bell, LogOut, Menu, X } from "lucide-react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 
 export function Navbar() {
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const { data: notifications } = useNotifications();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,17 +27,11 @@ export function Navbar() {
           <span>Event Alert</span>
         </Link>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-3">
           {user ? (
             <>
-              {isAdmin && (
-                <Button variant="outline" size="sm" asChild>
-                  <Link to="/admin"><Shield className="h-4 w-4 mr-1" />Admin</Link>
-                </Button>
-              )}
               <Button variant="outline" size="sm" asChild>
-                <Link to="/submit-event">Submit Event</Link>
+                <Link to="/submit-event">Post Event</Link>
               </Button>
               <Popover>
                 <PopoverTrigger asChild>
@@ -81,24 +75,17 @@ export function Navbar() {
           )}
         </div>
 
-        {/* Mobile toggle */}
         <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden border-t p-4 space-y-2 glass-effect">
           {user ? (
             <>
-              {isAdmin && (
-                <Button variant="outline" size="sm" className="w-full justify-start" asChild onClick={() => setMobileOpen(false)}>
-                  <Link to="/admin"><Shield className="h-4 w-4 mr-2" />Admin Dashboard</Link>
-                </Button>
-              )}
               <Button variant="outline" size="sm" className="w-full justify-start" asChild onClick={() => setMobileOpen(false)}>
-                <Link to="/submit-event">Submit Event</Link>
+                <Link to="/submit-event">Post Event</Link>
               </Button>
               <Button variant="outline" size="sm" className="w-full justify-start" asChild onClick={() => setMobileOpen(false)}>
                 <Link to="/profile">Profile</Link>
