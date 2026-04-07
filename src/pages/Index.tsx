@@ -42,7 +42,7 @@ const Index = () => {
             Discover campus events across colleges
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-primary-foreground leading-tight">
-            Never Miss a<br />Campus Event
+            Smart Event<br />Discovery
           </h1>
           <p className="text-primary-foreground/80 text-lg max-w-xl mx-auto">
             Find hackathons, workshops, seminars, and fests from colleges near you — all in one place.
