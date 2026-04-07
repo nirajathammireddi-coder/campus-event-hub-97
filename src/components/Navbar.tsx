@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Bell, LogOut, Menu, X } from "lucide-react";
+import { Bell, LogOut, Menu, X, CalendarDays } from "lucide-react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +32,9 @@ export function Navbar() {
             <>
               <Button variant="outline" size="sm" asChild>
                 <Link to="/submit-event">Post Event</Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/calendar"><CalendarDays className="h-4 w-4 mr-1" />Calendar</Link>
               </Button>
               <Popover>
                 <PopoverTrigger asChild>
@@ -86,6 +89,9 @@ export function Navbar() {
             <>
               <Button variant="outline" size="sm" className="w-full justify-start" asChild onClick={() => setMobileOpen(false)}>
                 <Link to="/submit-event">Post Event</Link>
+              </Button>
+              <Button variant="ghost" size="sm" className="w-full justify-start" asChild onClick={() => setMobileOpen(false)}>
+                <Link to="/calendar"><CalendarDays className="h-4 w-4 mr-2" />Calendar</Link>
               </Button>
               <Button variant="outline" size="sm" className="w-full justify-start" asChild onClick={() => setMobileOpen(false)}>
                 <Link to="/profile">Profile</Link>
