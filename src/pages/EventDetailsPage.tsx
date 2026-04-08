@@ -6,7 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CalendarDays, MapPin, Building2, Clock, ArrowLeft, ExternalLink, Camera, User, Phone, Mail, Trash2, Bookmark, BookmarkCheck, ThumbsUp, ThumbsDown, Share2 } from "lucide-react";
+import { CalendarDays, MapPin, Building2, Clock, ArrowLeft, ExternalLink, Camera, User, Trash2, Bookmark, BookmarkCheck, ThumbsUp, ThumbsDown, Share2, Edit, Instagram, Youtube, MessageCircle, Globe } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEventPhotos, useUploadEventPhoto } from "@/hooks/useEventPhotos";
 import { useBookmarks, useToggleBookmark } from "@/hooks/useBookmarks";
@@ -97,6 +97,8 @@ export default function EventDetailsPage() {
     </div>
   );
 
+  const isOwner = user?.id === event.created_by;
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -115,6 +117,11 @@ export default function EventDetailsPage() {
           <div className="flex items-center justify-between">
             <Badge className={`${typeColors[event.event_type]}`}>{event.event_type}</Badge>
             <div className="flex items-center gap-2">
+              {isOwner && (
+                <Button variant="outline" size="sm" asChild>
+                  <Link to={`/edit-event/${event.id}`}><Edit className="h-4 w-4 mr-1" /> Edit</Link>
+                </Button>
+              )}
               <Button variant="ghost" size="icon" onClick={handleShare}>
                 <Share2 className="h-4 w-4" />
               </Button>
@@ -173,14 +180,39 @@ export default function EventDetailsPage() {
             <div className="prose prose-sm max-w-none text-foreground/80 pt-4 whitespace-pre-line">{event.description}</div>
           )}
 
-          {(event.submitter_name || event.submitter_email || event.submitter_phone) && (
+          {/* Social Links */}
+          {(event.instagram_link || event.youtube_link || event.whatsapp_link || event.website_link) && (
+            <div className="flex flex-wrap gap-3 pt-2">
+              {event.instagram_link && (
+                <Button variant="outline" size="sm" asChild>
+                  <a href={event.instagram_link} target="_blank" rel="noopener noreferrer"><Instagram className="h-4 w-4 mr-1" /> Instagram</a>
+                </Button>
+              )}
+              {event.youtube_link && (
+                <Button variant="outline" size="sm" asChild>
+                  <a href={event.youtube_link} target="_blank" rel="noopener noreferrer"><Youtube className="h-4 w-4 mr-1" /> YouTube</a>
+                </Button>
+              )}
+              {event.whatsapp_link && (
+                <Button variant="outline" size="sm" asChild>
+                  <a href={event.whatsapp_link} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4 mr-1" /> WhatsApp</a>
+                </Button>
+              )}
+              {event.website_link && (
+                <Button variant="outline" size="sm" asChild>
+                  <a href={event.website_link} target="_blank" rel="noopener noreferrer"><Globe className="h-4 w-4 mr-1" /> Website</a>
+                </Button>
+              )}
+            </div>
+          )}
+
+          {/* Posted by — only show name and college, hide email/phone */}
+          {event.submitter_name && (
             <div className="border rounded-lg p-4 mt-4 space-y-2 bg-muted/30">
               <h3 className="text-sm font-semibold text-foreground">Posted by</h3>
               <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                {event.submitter_name && <span className="flex items-center gap-1.5"><User className="h-4 w-4" />{event.submitter_name}</span>}
+                <span className="flex items-center gap-1.5"><User className="h-4 w-4" />{event.submitter_name}</span>
                 {event.submitter_college && <span className="flex items-center gap-1.5"><Building2 className="h-4 w-4" />{event.submitter_college}</span>}
-                {event.submitter_phone && <span className="flex items-center gap-1.5"><Phone className="h-4 w-4" />{event.submitter_phone}</span>}
-                {event.submitter_email && <span className="flex items-center gap-1.5"><Mail className="h-4 w-4" />{event.submitter_email}</span>}
               </div>
             </div>
           )}
