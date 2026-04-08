@@ -124,6 +124,7 @@ export type Database = {
           event_type: Database["public"]["Enums"]["event_type"]
           id: string
           image_url: string | null
+          instagram_link: string | null
           registration_link: string | null
           status: Database["public"]["Enums"]["event_status"]
           submitter_college: string | null
@@ -135,6 +136,9 @@ export type Database = {
           time: string | null
           title: string
           updated_at: string
+          website_link: string | null
+          whatsapp_link: string | null
+          youtube_link: string | null
         }
         Insert: {
           audience_type?: Database["public"]["Enums"]["audience_type"]
@@ -149,6 +153,7 @@ export type Database = {
           event_type?: Database["public"]["Enums"]["event_type"]
           id?: string
           image_url?: string | null
+          instagram_link?: string | null
           registration_link?: string | null
           status?: Database["public"]["Enums"]["event_status"]
           submitter_college?: string | null
@@ -160,6 +165,9 @@ export type Database = {
           time?: string | null
           title: string
           updated_at?: string
+          website_link?: string | null
+          whatsapp_link?: string | null
+          youtube_link?: string | null
         }
         Update: {
           audience_type?: Database["public"]["Enums"]["audience_type"]
@@ -174,6 +182,7 @@ export type Database = {
           event_type?: Database["public"]["Enums"]["event_type"]
           id?: string
           image_url?: string | null
+          instagram_link?: string | null
           registration_link?: string | null
           status?: Database["public"]["Enums"]["event_status"]
           submitter_college?: string | null
@@ -185,6 +194,9 @@ export type Database = {
           time?: string | null
           title?: string
           updated_at?: string
+          website_link?: string | null
+          whatsapp_link?: string | null
+          youtube_link?: string | null
         }
         Relationships: []
       }
