@@ -148,7 +148,7 @@ export default function SubmitEventPage() {
               <div className="space-y-3 p-4 rounded-lg border bg-muted/30">
                 <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                   <Mail className="h-4 w-4" /> Email Verification
-                  {emailVerified && <CheckCircle className="h-4 w-4 text-green-500" />}
+                  {emailVerified && <CheckCircle className="h-4 w-4 text-accent" />}
                 </h3>
                 {!emailVerified ? (
                   <div className="space-y-3">
