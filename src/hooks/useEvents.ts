@@ -25,6 +25,10 @@ export type Event = {
   submitter_phone: string | null;
   submitter_email: string | null;
   submitter_college: string | null;
+  instagram_link: string | null;
+  youtube_link: string | null;
+  whatsapp_link: string | null;
+  website_link: string | null;
 };
 
 interface EventFilters {

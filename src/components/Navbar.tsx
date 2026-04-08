@@ -2,10 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Bell, LogOut, Menu, X, CalendarDays } from "lucide-react";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications, markNotificationRead } from "@/hooks/useNotifications";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function Navbar() {
   const { user, signOut } = useAuth();
@@ -13,10 +15,19 @@ export function Navbar() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const unread = notifications?.filter((n) => !n.is_read).length ?? 0;
+  const queryClient = useQueryClient();
 
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
+  };
+
+  const handleNotificationClick = async (n: { id: string; is_read: boolean; event_id: string | null }) => {
+    if (!n.is_read) {
+      await markNotificationRead(n.id);
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    }
+    if (n.event_id) navigate(`/event/${n.event_id}`);
   };
 
   return (
@@ -27,7 +38,8 @@ export function Navbar() {
           <span>Event Alert</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           {user ? (
             <>
               <Button variant="outline" size="sm" asChild>
@@ -56,10 +68,14 @@ export function Navbar() {
                       <p className="text-sm text-muted-foreground p-4 text-center">No notifications</p>
                     )}
                     {notifications?.map((n) => (
-                      <div key={n.id} className={`p-3 border-b last:border-0 ${n.is_read ? "opacity-60" : ""}`}>
+                      <button
+                        key={n.id}
+                        onClick={() => handleNotificationClick(n)}
+                        className={`w-full text-left p-3 border-b last:border-0 hover:bg-muted/50 transition-colors ${n.is_read ? "opacity-60" : ""}`}
+                      >
                         <p className="text-sm font-medium">{n.title}</p>
                         {n.message && <p className="text-xs text-muted-foreground mt-1">{n.message}</p>}
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </PopoverContent>
@@ -78,9 +94,12 @@ export function Navbar() {
           )}
         </div>
 
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
+          <Button variant="ghost" size="icon" onClick={() => setMobileOpen(!mobileOpen)}>
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
       </div>
 
       {mobileOpen && (
